@@ -1,4 +1,4 @@
-import {Friend, Colleague } from './mytypes'
+import { Friend, Colleague, EmailContact } from "./mytypes";
 import {friends, colleagues } from "./01-basics";
 
 function older(f: Friend) : string {
@@ -9,7 +9,7 @@ function older(f: Friend) : string {
 console.log(older(friends[0]))
 
 // Find the colleague with the highest extension number.
-function highestExtension(cs: Colleague[]): Colleague {
+function highestExtension(cs: Colleague[]) {
   const result = cs.sort(
     (c1, c2) => c1.contact.extension - c2.contact.extension
   );
@@ -35,3 +35,40 @@ function addColleague(
 addColleague(colleagues.current, "Sheild O Connell", "HR", "soc@here.com");
 console.log(colleagues.current.filter((c) => c.name === "Sheild O Connell"));
 
+function sortColleagues(
+  colleagues: Colleague[],
+  sorter: (c1: Colleague, c2: Colleague) => number
+): EmailContact[] {
+  const sorted = colleagues.sort(sorter);
+  const result: EmailContact[] = sorted.map((ce) => ({
+    name: ce.name,
+    email: ce.contact.email,
+  }));
+  return result;
+}
+
+console.log(
+  sortColleagues(
+    colleagues.current,
+    (a, b) => a.contact.extension - b.contact.extension
+  )
+);
+
+console.log(
+  sortColleagues(
+    colleagues.current,
+    (a, b) => a.name.length - b.name.length
+  )
+);
+
+function findFriends(
+  friendsToSearch: Friend[],
+  matches: (friend: Friend) => boolean
+) {
+  const matchingFriends = friendsToSearch.filter(matches);
+  const names = matchingFriends.map((friend) => friend.name);
+  return names;
+}
+
+console.log(findFriends(friends, (friend) => friend.name.startsWith("Pa")));
+console.log(findFriends(friends, (friend) => friend.age < 35));
