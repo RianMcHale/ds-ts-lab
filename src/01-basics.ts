@@ -18,7 +18,7 @@ const friend2 : Friend = {
   age: 31,
 };
 
-const friends = [friend1, friend2];
+const friends: Friend[] = [friend1, friend2];
 console.log(friends[1]);
 
 //   -------------------
@@ -29,6 +29,11 @@ interface Colleague {
         email: string;
         extension: number;
     };
+}
+
+interface ColleagueHistory {
+  current: Colleague[],
+  former: Colleague[]
 }
 
 const colleague1 : Colleague = {
@@ -58,5 +63,9 @@ const colleague3 : Colleague = {
   },
 };
 
-const colleagues = [colleague1, colleague2, colleague3];
-console.log(colleagues[2]);
+export const colleagues: ColleagueHistory = {
+  current: [colleague1, colleague2, colleague3],
+  former: [],
+};
+
+console.log(colleagues.current[0]);
